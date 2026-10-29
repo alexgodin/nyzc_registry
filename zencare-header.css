@@ -104,3 +104,32 @@ textarea.w-input{height:auto}
 @media screen and (max-width:991px){.image-16{max-height:40px}.menu-link{text-align:left}.div-block-41{display:none}.rebrand-menu{height:45px}.side-strip{background-color:var(--final-gray)}.side-strip.purple,.side-strip.yellow,.side-strip.blue,.side-strip.white{display:none}.menu-dropdown{z-index:2;border-bottom:1px solid var(--final-gray);background-color:#fff}.menu-dropdown.mobile{display:block}.nav-menu-2{justify-content:center;align-items:stretch;width:100%;height:99vh;margin-top:60px;position:fixed;inset:0%;overflow:scroll}.nyzc-logo{max-width:none}.link-block-menu{border-bottom-style:solid;border-bottom-color:var(--final-gray);background-color:var(--white);width:100%;padding:20px 20px 20px 17px;display:flex;position:relative}.link-block-menu:hover{color:var(--blue-nyzc)}.link-block-menu.w--current{background-color:#fff}.link-block-menu.mobile{z-index:20;display:flex}.dropdown-3,.dropdown-4{border-bottom:1px solid var(--final-gray);width:100%}.dropdown-5{border-bottom:1px solid var(--final-gray)}.dropdown-6{z-index:200;width:100%}.side-menu{display:none}.dropdown-mobile{padding-left:40px}.search-pop-up{display:none}.bottom-strip{background-color:var(--final-gray)}}
 @media screen and (max-width:767px){.dropdown-custom{padding-left:0}}
 @media screen and (max-width:479px){.menu-link{text-align:left;line-height:1em}.menu-link.donante{margin-top:10px}.div-block-40{padding-left:10px;padding-right:10px}.rebrand-menu{height:45px}.menu-dropdown{border-bottom-width:.5px;border-bottom-color:var(--dark-gray);width:100%}.menu-dropdown.mobile{border-bottom-width:.5px;padding-top:0;padding-bottom:0}.menu-dropdown.donate{border-bottom-width:.5px}.nav-menu-2{flex-flow:row}.nyzc-logo.w--current{padding-left:0}.link-block-menu.w--current{justify-content:flex-start;align-items:center;width:100%;height:60px;margin-left:0;padding-left:20px;display:flex;position:relative}.link-block-menu.mobile{border-bottom-width:.5px;border-bottom-color:var(--coal-gray)}.dropdown-3,.dropdown-4,.dropdown-5,.dropdown-6{width:100%}.link-block-8{padding-top:20px;line-height:1em}.menu-button-2{padding-right:8px}}
+
+/* Local overrides for the registry page (not from zencare.org) */
+.menu-rebrand a{text-decoration:none}
+.w-dropdown-list.w--open{display:block}
+.w-nav-menu.w--open{display:flex}
+.dropdown-mobile{box-shadow:0 8px 24px rgba(0,0,0,.12);min-width:260px;white-space:nowrap}
+.dropdown-custom{transition:background-color .15s,color .15s}
+.dropdown-custom:hover{background-color:var(--new-gray);color:var(--pink-nyzc)}
+@media (min-width:992px){
+  .nav-menu-2 .w-dropdown:hover>.w-dropdown-list{display:block}
+  .nav-menu-2 .w-dropdown:hover .bottom-strip.red{display:block}
+  .nav-menu-2 .w-dropdown:hover>.menu-dropdown .menu-link{color:var(--pink-nyzc)}
+}
+
+/* Hamburger / responsive menu (Webflow's nav-overlay behavior, reproduced) */
+.w-nav-button{color:var(--coal-gray)}
+.w-nav-button.w--open{background-color:var(--new-gray);color:var(--pink-nyzc)}
+@media screen and (max-width:991px){
+  .w-nav[data-collapse=medium] .w-nav-menu.w--open{display:flex}
+  .nav-menu-2{background-color:#fff;flex-flow:column;justify-content:flex-start;align-items:stretch;padding-bottom:80px}
+  .nav-menu-2 .w-dropdown{display:block;position:relative;width:100%}
+  .nav-menu-2 .w-dropdown-toggle{display:block;width:100%}
+  .nav-menu-2 .w-dropdown-list{position:relative;min-width:0;white-space:normal;box-shadow:none;background:#fff}
+  .nav-menu-2{top:var(--hdr-h,60px);bottom:0;height:auto;margin-top:0}
+  .nav-menu-2 .menu-dropdown{padding:20px 20px 20px 17px}
+  .nav-menu-2 .link-block-8{display:block;padding:0}
+  .nav-menu-2 .menu-link,.nav-menu-2 .menu-link.donante{margin:0 20px;padding:0}
+  .nav-menu-2 .icon-10{margin-right:20px}
+}
