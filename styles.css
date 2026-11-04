@@ -87,6 +87,7 @@ body {
 .gift-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 14px; }
 .gift-price { color: var(--price); font-weight: 800; font-size: 1.35rem; font-variant-numeric: tabular-nums; line-height: 1.1; }
 .gift-price small { display: block; margin-top: 4px; color: var(--muted); font-weight: 400; font-size: 0.8rem; }
+.gift-price .each { margin-left: 6px; color: var(--muted); font-weight: 400; font-size: 0.85rem; }
 .gift-price.tbd { font-size: 1rem; color: var(--muted); }
 .gift-btn {
   flex-shrink: 0; padding: 10px 16px; border-radius: 4px;
