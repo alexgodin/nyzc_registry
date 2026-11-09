@@ -120,7 +120,7 @@ footer { padding-block: 0 56px; text-align: center; color: var(--muted); font-si
 #pledge { width: min(440px, calc(100vw - 32px)); padding: 48px 24px 24px; overflow: visible; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); font-family: var(--font); }
 #pledge::backdrop { background: rgb(21 13 18 / 0.55); }
 #pledge h2 { margin: 0; color: var(--heading); font-weight: 800; font-size: 1.3rem; }
-#pledge .pledge-item { margin: 4px 0 16px; color: var(--muted); }
+#pledge .pledge-note { margin: 8px 0 16px; line-height: 1.5; }
 #pledge label { display: block; margin-bottom: 12px; font-size: 0.88rem; font-weight: 800; }
 #pledge input, #pledge textarea { display: block; width: 100%; margin-top: 4px; padding: 9px 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--fg); font: 400 1rem var(--font); }
 #pledge input:focus-visible, #pledge textarea:focus-visible { outline: 3px solid var(--gold); outline-offset: 1px; }
