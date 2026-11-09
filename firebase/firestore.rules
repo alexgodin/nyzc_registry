@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Pledges can be created from the public page but never read, changed or deleted.
+    match /pledges/{id} {
+      allow read, update, delete: if false;
+      allow create: if request.resource.data.keys().hasOnly(
+                         ['item', 'quantity', 'amount', 'name', 'email', 'createdAt'])
+                    && request.resource.data.keys().hasAll(['item', 'quantity', 'name', 'email', 'createdAt'])
+                    && request.resource.data.item is string && request.resource.data.item.size() <= 200
+                    && request.resource.data.quantity is int
+                    && request.resource.data.quantity >= 1 && request.resource.data.quantity <= 100
+                    && (!('amount' in request.resource.data)
+                        || (request.resource.data.amount is number && request.resource.data.amount >= 0))
+                    && request.resource.data.name is string
+                    && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 200
+                    && request.resource.data.email is string
+                    && request.resource.data.email.matches('.+@.+\\..+') && request.resource.data.email.size() <= 200
+                    && request.resource.data.createdAt == request.time;
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

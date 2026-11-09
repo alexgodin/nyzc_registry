@@ -85,7 +85,7 @@
         <h2 class="gift-name">Black zabuton cases</h2>
         <p class="gift-note">Black replacement covers for sun-faded Zabutons.</p>
         <div class="gift-foot">
-          <div class="gift-price">$68<span class="each">each</span><small>40 needed</small></div>
+          <div class="gift-price">$48<span class="each">each</span><small>40 needed</small></div>
           <a class="gift-btn" href="mailto:info@zencare.org?subject=Practice%20Registry%3A%20Interested%20in%20Donating%20Black%20zabuton%20cases">Give this gift</a>
           <span class="gift-thanks">Given with thanks</span>
         </div>
@@ -97,7 +97,7 @@
         <h2 class="gift-name">Black zabuton mats</h2>
         <p class="gift-note">Classic padded mats that sit beneath each zafu.</p>
         <div class="gift-foot">
-          <div class="gift-price">$101<span class="each">each</span><small>18 needed</small></div>
+          <div class="gift-price">$71<span class="each">each</span><small>18 needed</small></div>
           <a class="gift-btn" href="mailto:info@zencare.org?subject=Practice%20Registry%3A%20Interested%20in%20Donating%20Black%20zabuton%20mats">Give this gift</a>
           <span class="gift-thanks">Given with thanks</span>
         </div>
@@ -109,7 +109,7 @@
         <h2 class="gift-name">Black zafu cushions</h2>
         <p class="gift-note">Classic buckwheat hull zafu for seats in the zendo.</p>
         <div class="gift-foot">
-          <div class="gift-price">$79<span class="each">each</span><small>48 needed</small></div>
+          <div class="gift-price">$55<span class="each">each</span><small>48 needed</small></div>
           <a class="gift-btn" href="mailto:info@zencare.org?subject=Practice%20Registry%3A%20Interested%20in%20Donating%20Black%20zafu%20cushions">Give this gift</a>
           <span class="gift-thanks">Given with thanks</span>
         </div>
@@ -164,37 +164,13 @@
       </div>
     </article>
     <article class="gift">
-      <div class="gift-photo"><img src="images/placeholder-altar.svg" alt="Placeholder image for Altar" loading="lazy"></div>
+      <div class="gift-photo has-photo fill"><img src="images/altar.jpg" alt="Altar" loading="lazy"></div>
       <div class="gift-body">
         <h2 class="gift-name">Altar</h2>
         <p class="gift-note">The main altar for the zendo.</p>
         <div class="gift-foot">
-          <div class="gift-price tbd">Price coming soon<small>Give any amount</small></div>
+          <div class="gift-price">$7,970</div>
           <a class="gift-btn" href="mailto:info@zencare.org?subject=Practice%20Registry%3A%20Interested%20in%20Donating%20Altar">Give this gift</a>
-          <span class="gift-thanks">Given with thanks</span>
-        </div>
-      </div>
-    </article>
-    <article class="gift">
-      <div class="gift-photo"><img src="images/placeholder-tan.svg" alt="Placeholder image for Tan" loading="lazy"></div>
-      <div class="gift-body">
-        <h2 class="gift-name">Tan</h2>
-        <p class="gift-note">A raised sitting platform for the abbot.</p>
-        <div class="gift-foot">
-          <div class="gift-price tbd">Price coming soon<small>Give any amount</small></div>
-          <a class="gift-btn" href="mailto:info@zencare.org?subject=Practice%20Registry%3A%20Interested%20in%20Donating%20Tan">Give this gift</a>
-          <span class="gift-thanks">Given with thanks</span>
-        </div>
-      </div>
-    </article>
-    <article class="gift">
-      <div class="gift-photo"><img src="images/placeholder-shoji-screens.svg" alt="Placeholder image for Shoji screens" loading="lazy"></div>
-      <div class="gift-body">
-        <h2 class="gift-name">Shoji screens</h2>
-        <p class="gift-note">Storage area covers to match entryway doors.</p>
-        <div class="gift-foot">
-          <div class="gift-price tbd">Price coming soon<small>Give any amount</small></div>
-          <a class="gift-btn" href="mailto:info@zencare.org?subject=Practice%20Registry%3A%20Interested%20in%20Donating%20Shoji%20screens">Give this gift</a>
           <span class="gift-thanks">Given with thanks</span>
         </div>
       </div>
@@ -205,7 +181,26 @@
     <p>Every gift, large or small, is received with gratitude. Gassho.</p>
   </footer>
 </div>
+
+<dialog id="pledge" aria-labelledby="pledge-title">
+  <img class="pledge-icon" src="images/nyzc-icon.png" alt="NYZC">
+  <form id="pledge-form" method="dialog">
+    <h2 id="pledge-title">Give this gift</h2>
+    <p class="pledge-item" id="pledge-item"></p>
+    <input class="pledge-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <label>Name <input name="name" required maxlength="200" autocomplete="name"></label>
+    <label>Email <input name="email" type="email" required maxlength="200" autocomplete="email"></label>
+    <label class="pledge-qty">How many? <input name="quantity" type="number" min="1" max="1" value="1"></label>
+    <label class="pledge-amount">Amount you would like to give ($) <input name="amount" type="number" min="1" step="1"></label>
+    <div class="pledge-actions">
+      <button type="submit" class="gift-btn">Send pledge</button>
+      <button type="button" class="pledge-cancel" data-close>Cancel</button>
+    </div>
+  </form>
+  <p id="pledge-status" class="pledge-status" role="status" hidden></p>
+</dialog>
 <script src="zencare-header.js"></script>
+<script defer src="registry.js"></script>
 <script>
 // End the purple band 38% of the way down the first card's photo.
 (function () {
