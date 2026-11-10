@@ -27,7 +27,7 @@ Each card follows the same structure:
     <div class="gift-foot">
       <div class="gift-price">$988.29<small>optional line, e.g. "$79 each · 25 needed"</small></div>
       <a class="gift-btn" href="mailto:...">Give this gift</a>
-      <span class="gift-thanks">Given with thanks</span>
+      <span class="gift-thanks">Offered with thanks</span>
     </div>
   </div>
 </article>
@@ -37,7 +37,7 @@ Each card follows the same structure:
 - **Items without a photo** drop the `has-photo fill` classes and point the `img` at a temporary placeholder image (none are in use right now).
 - **New photos** look best at 4:5 on the same background. `images/background.jpg` can be reused for that.
 
-## Marking an item as given
+## Marking an item as offered
 
 Add the class `purchased` to the card:
 
@@ -45,7 +45,7 @@ Add the class `purchased` to the card:
 <article class="gift purchased">
 ```
 
-This greys out the photo and text, strikes through the price, hides the button and shows a red "Given with thanks" line. Remove the class to undo it. No item is marked as given right now.
+This greys out the photo and text, strikes through the price, hides the button and puts an "Offered" label on the photo and shows a gold "Offered with thanks" line. Remove the class to undo it. Currently marked as offered: Altar, Avalokiteshvara Statue, Haishiki bowing mat and Shoji screens.
 
 ## Pledges (Firebase to Google Sheet)
 

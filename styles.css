@@ -6,7 +6,7 @@
   /* Brand: purple, red, gold main; blue, white, black accents */
   --purple: #79345D;
   --red: #B70D12;
-  --gold: #CC9C22;
+  --gold: #CC9C22; --gold-ink: #3A2A05; --gold-text: #8A6510;
   --blue: #1473BC;
 
   --bg: #FFFFFF;
@@ -26,13 +26,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #150D12; --surface: #21151D; --band: #4E2140; --fg: #F4ECF1; --muted: #B9A5B1; --line: #3A2833;
-    --heading: #E7B8D2; --price: #E9C46A; --button-bg: #CC9C22; --button-fg: #150D12; --seal: #E2453F;
+    --heading: #E7B8D2; --price: #E9C46A; --button-bg: #CC9C22; --button-fg: #150D12; --seal: #E2453F; --gold-text: #E9C46A;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #150D12; --surface: #21151D; --band: #4E2140; --fg: #F4ECF1; --muted: #B9A5B1; --line: #3A2833;
-  --heading: #E7B8D2; --price: #E9C46A; --button-bg: #CC9C22; --button-fg: #150D12; --seal: #E2453F;
+  --heading: #E7B8D2; --price: #E9C46A; --button-bg: #CC9C22; --button-fg: #150D12; --seal: #E2453F; --gold-text: #E9C46A;
   color-scheme: dark;
 }
 
@@ -99,15 +99,21 @@ body {
 
 /* ===== Purchased state =====
    Add class="gift purchased" to any card once it has been given.
-   Greys out the photo and text, strikes through the price, and swaps the button for a red thank-you line. */
-.gift.purchased .gift-photo img { filter: grayscale(1); opacity: 0.45; }
+   Greys out the photo and text, strikes through the price, and swaps the button for a gold thank-you line and puts a quiet gold OFFERED label over the photo. */
+.gift.purchased .gift-photo img { filter: grayscale(1); opacity: 0.22; }
+.gift.purchased .gift-photo::after {
+  content: "Offered"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  padding: 9px 22px; border: 1px solid var(--gold); border-radius: 2px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent); color: var(--gold-text);
+  font: 800 0.8rem/1 var(--font); letter-spacing: 0.28em; text-indent: 0.28em; text-transform: uppercase;
+}
 .gift.purchased .gift-name,
 .gift.purchased .gift-note,
 .gift.purchased .gift-price { color: var(--muted); }
 .gift.purchased .gift-btn { display: none; }
 .gift .gift-thanks { display: none; }
 .gift.purchased .gift-price { text-decoration: line-through; text-decoration-thickness: 2px; }
-.gift.purchased .gift-thanks { display: block; color: var(--seal); font-weight: 800; font-size: 0.88rem; }
+.gift.purchased .gift-thanks { display: block; color: var(--gold-text); font-weight: 800; font-size: 0.88rem; }
 
 footer { padding-block: 0 56px; text-align: center; color: var(--muted); font-size: 0.9rem; }
 
