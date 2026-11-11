@@ -45,7 +45,7 @@ Add the class `purchased` to the card:
 <article class="gift purchased">
 ```
 
-This greys out the photo and text, strikes through the price, hides the button and puts an "Offered" label on the photo and shows a gold "Offered with thanks" line. Remove the class to undo it. Currently marked as offered: Altar, Avalokiteshvara Statue, Haishiki bowing mat and Shoji screens.
+This greys out the photo and text, strikes through the price, hides the button and puts an "Offered" label on the photo and shows a gold "Offered with thanks" line. Remove the class to undo it. Currently marked as offered: Altar, Avalokiteshvara Statue, Dokusan stool, Haishiki bowing mat, Ihai tablet (Sankai-Banrei-tou), Reception stool, Shoji screens and Zaniku cushion.
 
 ## Pledges (Firebase to Google Sheet)
 
