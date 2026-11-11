@@ -68,7 +68,10 @@ async function applyTotals() {
     const { needed } = readCard(card.querySelector(".gift-btn"));
     if (pledged >= needed) return card.classList.add("purchased");
     const small = card.querySelector(".gift-price small");
-    if (small && needed > 1) small.textContent = small.textContent.replace(/\d+ needed/, needed - pledged + " needed");
+    if (small && needed > 1) {
+      small.textContent = small.textContent.replace(/\d+ needed/, needed - pledged + " needed");
+      small.append(document.createElement("br"), pledged + " already offered");
+    }
   });
 }
 if (configured) applyTotals().catch((err) => console.warn("Could not load pledged totals", err));
