@@ -34,6 +34,7 @@ function openPledge(btn) {
   current = readCard(btn);
   form.reset();
   form.hidden = false;
+  form.querySelector("[type=submit]").disabled = false;
   statusEl.hidden = true;
   form.querySelector("[name=quantity]").max = current.needed;
   form.querySelector(".pledge-qty").hidden = current.needed < 2;
