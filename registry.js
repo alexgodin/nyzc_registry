@@ -14,7 +14,13 @@ const dialog = document.getElementById("pledge");
 const form = document.getElementById("pledge-form");
 const statusEl = document.getElementById("pledge-status");
 const configured = Boolean(firebaseConfig.apiKey && firebaseConfig.appId);
-let sdk;
+let sdk, dbPromise;
+// One Firebase app, shared by the totals read on page load and the pledge write on submit.
+function getDb() {
+  return (dbPromise ||= Promise.all([import(`${SDK}/firebase-app.js`), import(`${SDK}/firebase-firestore.js`)]).then(
+    ([{ initializeApp }, fs]) => ({ fs, db: fs.getFirestore(initializeApp(firebaseConfig)) })
+  ));
+}
 
 // Everything about an item is read from its card, so editing a card keeps the form in sync.
 function readCard(btn) {
@@ -49,6 +55,24 @@ function show(message, isError) {
   statusEl.hidden = false;
 }
 
+// Pledged totals (items/{name}, written by the Cloud Function) mark cards as offered and lower "N needed".
+// Cards already marked by hand stay marked, and any failure here leaves the page as it is.
+const itemKey = (name) => name.trim().replace(/\//g, "-");
+async function applyTotals() {
+  const { fs, db } = await getDb();
+  const totals = {};
+  (await fs.getDocs(fs.collection(db, "items"))).forEach((d) => { totals[d.id] = d.data().pledged || 0; });
+  document.querySelectorAll(".gift").forEach((card) => {
+    const pledged = totals[itemKey(card.querySelector(".gift-name").textContent)] || 0;
+    if (!pledged || card.classList.contains("purchased")) return;
+    const { needed } = readCard(card.querySelector(".gift-btn"));
+    if (pledged >= needed) return card.classList.add("purchased");
+    const small = card.querySelector(".gift-price small");
+    if (small && needed > 1) small.textContent = small.textContent.replace(/\d+ needed/, needed - pledged + " needed");
+  });
+}
+if (configured) applyTotals().catch((err) => console.warn("Could not load pledged totals", err));
+
 document.addEventListener("click", (e) => {
   const btn = e.target.closest(".gift .gift-btn");
   if (!btn || !configured || !dialog.showModal) return;
@@ -66,9 +90,7 @@ form.addEventListener("submit", async (e) => {
   const submit = form.querySelector("[type=submit]");
   submit.disabled = true;
   try {
-    sdk ||= await Promise.all([import(`${SDK}/firebase-app.js`), import(`${SDK}/firebase-firestore.js`)]);
-    const [{ initializeApp }, fs] = sdk;
-    const db = fs.getFirestore(initializeApp(firebaseConfig));
+    const { fs, db } = await getDb();
     const pledge = { item: current.item, quantity, amount, name: f.get("name").trim(), email: f.get("email").trim(), createdAt: fs.serverTimestamp() };
     await fs.addDoc(fs.collection(db, "pledges"), pledge);
     form.hidden = true;

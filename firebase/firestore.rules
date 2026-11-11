@@ -18,6 +18,11 @@ service cloud.firestore {
                     && request.resource.data.email.matches('.+@.+\\..+') && request.resource.data.email.size() <= 200
                     && request.resource.data.createdAt == request.time;
     }
+    // Pledged totals per item, written only by the Cloud Function. The page reads them to mark cards as offered.
+    match /items/{id} {
+      allow read: if true;
+      allow write: if false;
+    }
     match /{document=**} { allow read, write: if false; }
   }
 }

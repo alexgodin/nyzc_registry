@@ -60,6 +60,8 @@ One-time setup:
 3. Share the Sheet with `645953910857-compute@developer.gserviceaccount.com` as Editor.
 4. In `firebase/functions`, run `npm install`, then from `firebase/` run `firebase deploy --only firestore:rules,functions`. It asks for `SHEET_ID`, the long ID in the Sheet's URL.
 
+The same function adds each pledge's quantity to `items/{item name}.pledged` in Firestore. On page load, `registry.js` reads `items/*` (public read, no writes) and marks a card as offered once pledged reaches the needed count, and lowers its "N needed" until then. Cards already marked `purchased` in the HTML stay marked. The key is the card's name, so renaming a card stops its total from matching. To correct a count (for example after deleting a pledge row), set `pledged` on the item's document in the Firebase console.
+
 A pledge whose Sheet row failed stays in Firestore without `sheetRowAppended: true`. Firestore rules (`firebase/firestore.rules`) let the page create pledges but never read them.
 
 ## Donate buttons

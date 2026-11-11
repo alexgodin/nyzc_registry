@@ -1,10 +1,17 @@
 const { onDocumentCreated } = require("firebase-functions/v2/firestore");
 const { defineString } = require("firebase-functions/params");
 const logger = require("firebase-functions/logger");
+const { initializeApp } = require("firebase-admin/app");
+const { FieldValue } = require("firebase-admin/firestore");
 const { google } = require("googleapis");
+
+initializeApp();
 
 // ID from the sheet URL: docs.google.com/spreadsheets/d/<SHEET_ID>/edit
 const SHEET_ID = defineString("SHEET_ID");
+
+// Pledged totals live in items/{item name}. registry.js builds the same key from the card's name.
+const itemKey = (name) => String(name).trim().replace(/\//g, "-");
 
 // Columns: Timestamp | Item | Quantity | Amount | Name | Email
 exports.appendPledgeToSheet = onDocumentCreated("pledges/{id}", async (event) => {
@@ -28,6 +35,13 @@ exports.appendPledgeToSheet = onDocumentCreated("pledges/{id}", async (event) =>
     valueInputOption: "RAW",
     requestBody: { values: [row] },
   });
-  await snap.ref.update({ sheetRowAppended: true });
+
+  // The page reads items/* to mark cards as offered. The total and the flag are written together,
+  // so a retry never counts the same pledge twice.
+  const db = snap.ref.firestore;
+  const batch = db.batch();
+  batch.set(db.collection("items").doc(itemKey(p.item)), { pledged: FieldValue.increment(p.quantity) }, { merge: true });
+  batch.update(snap.ref, { sheetRowAppended: true });
+  await batch.commit();
   logger.info("Pledge appended", { id: event.params.id });
 });
