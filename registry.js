@@ -27,7 +27,7 @@ function readCard(btn) {
   const card = btn.closest(".gift");
   const price = card.querySelector(".gift-price");
   const amount = /\$([\d,]+)/.exec(price.firstChild.textContent);
-  const needed = /(\d+) needed/.exec(price.textContent);
+  const needed = /(\d+)(?:\/\d+)? needed/.exec(price.textContent); // "N needed", or "N/total needed" once some are offered
   return {
     item: card.querySelector(".gift-name").textContent.trim(),
     unit: amount ? Number(amount[1].replace(/,/g, "")) : null,
@@ -55,7 +55,7 @@ function show(message, isError) {
   statusEl.hidden = false;
 }
 
-// Pledged totals (items/{name}, written by the Cloud Function) mark cards as offered and lower "N needed".
+// Pledged totals (items/{name}, written by the Cloud Function) mark cards as offered and show "N/total needed" until then.
 // Cards already marked by hand stay marked, and any failure here leaves the page as it is.
 const itemKey = (name) => name.trim().replace(/\//g, "-");
 async function applyTotals() {
@@ -68,10 +68,7 @@ async function applyTotals() {
     const { needed } = readCard(card.querySelector(".gift-btn"));
     if (pledged >= needed) return card.classList.add("purchased");
     const small = card.querySelector(".gift-price small");
-    if (small && needed > 1) {
-      small.textContent = small.textContent.replace(/\d+ needed/, needed - pledged + " needed");
-      small.append(document.createElement("br"), pledged + " already offered");
-    }
+    if (small && needed > 1) small.textContent = small.textContent.replace(/\d+ needed/, needed - pledged + "/" + needed + " needed");
   });
 }
 if (configured) applyTotals().catch((err) => console.warn("Could not load pledged totals", err));
