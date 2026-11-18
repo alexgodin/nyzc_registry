@@ -9,6 +9,8 @@ initializeApp();
 
 // ID from the sheet URL: docs.google.com/spreadsheets/d/<SHEET_ID>/edit
 const SHEET_ID = defineString("SHEET_ID");
+// ntfy.sh topic the phone app subscribes to. Messages carry no donor details.
+const NTFY_TOPIC = defineString("NTFY_TOPIC");
 
 // Pledged totals live in items/{item name}. registry.js builds the same key from the card's name.
 const itemKey = (name) => String(name).trim().replace(/\//g, "-");
@@ -31,7 +33,7 @@ exports.appendPledgeToSheet = onDocumentCreated("pledges/{id}", async (event) =>
   // Throwing lets the doc stay in Firestore without the flag, so a failed row can be found and re-run.
   await sheets.spreadsheets.values.append({
     spreadsheetId: SHEET_ID.value(),
-    range: "A:F", // no tab name: appends to the first tab
+    range: "Sheet1!A:F", // name the tab so reordering tabs doesn't redirect pledges
     valueInputOption: "RAW",
     requestBody: { values: [row] },
   });
@@ -44,4 +46,16 @@ exports.appendPledgeToSheet = onDocumentCreated("pledges/{id}", async (event) =>
   batch.update(snap.ref, { sheetRowAppended: true });
   await batch.commit();
   logger.info("Pledge appended", { id: event.params.id });
+
+  // Sent last and never thrown, so a ntfy outage can't fail or retry the pledge.
+  try {
+    const res = await fetch(`https://ntfy.sh/${NTFY_TOPIC.value()}`, {
+      method: "POST",
+      headers: { Title: "New registry pledge", Click: `https://docs.google.com/spreadsheets/d/${SHEET_ID.value()}/edit` },
+      body: "A new pledge was added to the sheet.",
+    });
+    if (!res.ok) logger.warn("ntfy failed", { status: res.status });
+  } catch (err) {
+    logger.warn("ntfy failed", { error: err.message });
+  }
 });
